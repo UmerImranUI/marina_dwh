@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: vendor_orders
+    description: Raw vendor work orders submitted by vendors and captains
+
+    database: general-analytics-504713
+    schema: marina_project
+
+    tables:
+      - name: raw_vendor_work_orders
+        description: Raw operational work order logs

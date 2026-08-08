@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: stg_vendor_orders__work_orders
+    description: |
+      Cleans and standardizes vendor work order data.
+      No business logic or categorization is performed here.
+
+    columns:
+
+      - name: work_order_id
+        description: Unique work order identifier
+        tests:
+          - not_null
+          - unique
+
+      - name: vendor_name
+        tests:
+          - not_null
+
+      - name: raw_service_type
+        tests:
+          - not_null
+
+      - name: hours_spent
+        tests:
+          - not_null
+
+      - name: status
+        tests:
+          - not_null
+
+      - name: created_at
+        tests:
+          - not_null
+
+      - name: completed_at
+
+
+  

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    database: general-analytics-504713
+    schema: marina_project
+
+    tables:
+      - name: raw_marina_pms
+
+      - name: test_raw_stripe_subscriptions
+
+      - name: raw_vendor_work_orders

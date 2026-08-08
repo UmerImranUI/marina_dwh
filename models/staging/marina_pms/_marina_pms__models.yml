@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_marina_pms__bookings
+    description: |
+      Cleans and standardizes Marina PMS booking data.
+      Only renaming, casting and basic normalization.
+
+    columns:
+
+      - name: booking_id
+        description: Unique booking identifier
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_full_name
+        tests:
+          - not_null
+
+      - name: customer_email
+
+      - name: customer_phone
+
+      - name: boat_name
+
+      - name: hull_id
+        tests:
+          - not_null
+
+      - name: slip_fee
+
+      - name: marina_code

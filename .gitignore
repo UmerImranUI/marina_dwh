@@ -1,0 +1,80 @@
+# ============================================================
+# dbt
+# ============================================================
+
+# dbt target / compiled artifacts
+target/
+dbt_packages/
+logs/
+
+# dbt generated files
+manifest.json
+run_results.json
+catalog.json
+partial_parse.msgpack
+
+# ============================================================
+# Python
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ============================================================
+# Environment / Secrets
+# ============================================================
+
+.env
+.env.*
+!.env.example
+
+# Google Cloud credentials
+*.json
+!dbt_project.yml
+!packages.yml
+!package-lock.yml
+
+# Explicitly ignore common GCP credential files
+service-account*.json
+*-service-account.json
+gcp-credentials.json
+
+# ============================================================
+# IDE / Editors
+# ============================================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ============================================================
+# OS files
+# ============================================================
+
+Thumbs.db
+Desktop.ini
+
+# ============================================================
+# Logs
+# ============================================================
+
+*.log
+
+# ============================================================
+# Temporary files
+# ============================================================
+
+*.tmp
+*.temp
+*.bak
+*.txt
+*.zip

@@ -1,0 +1,36 @@
+version: 2
+
+models:
+
+  - name: int_owners
+    description: Canonical owner records with deterministic surrogate Owner_ID.
+
+    columns:
+
+      - name: owner_id
+        tests:
+          - unique
+          - not_null
+
+      - name: owner_email
+
+      - name: owner_phone
+
+      - name: owner_name
+
+  - name: int_boats
+    description: Canonical boat records with deterministic Boat_ID.
+
+    columns:
+
+      - name: boat_id
+        tests:
+          - unique
+          - not_null
+
+      - name: hull_id
+        tests:
+          - unique
+          - not_null
+
+      - name: boat_name

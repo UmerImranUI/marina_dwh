@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: marina_pms
+    description: Raw Marina PMS booking data
+
+    database: general-analytics-504713
+    schema: marina_project
+
+    tables:
+      - name: raw_marina_pms
+        description: Raw bookings from Marina PMS system

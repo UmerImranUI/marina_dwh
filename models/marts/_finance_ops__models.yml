@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: mrt_executive_kpis
+    description: >
+      Executive KPI mart. One row per metric per dimension slice (metric_group,
+      dimension_type, dimension_value, metric_name). Powers the executive dashboard
+      for Active MRR / ARR, vendor utilization, and vendor response time.
+    columns:
+      - name: metric_id
+        description: Deterministic surrogate key (hash of metric_group, dimension_type, dimension_value, metric_name).
+        tests:
+          - unique
+          - not_null
+
+      - name: metric_group
+        description: Top-level KPI category.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['REVENUE', 'VENDOR_UTILIZATION', 'VENDOR_RESPONSE_TIME']
+
+      - name: dimension_type
+        description: What the metric is sliced by.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['COMPANY', 'VENDOR']
+
+      - name: dimension_value
+        description: The specific slice value (e.g. a vendor name, or 'ALL' for company-wide metrics).
+        tests:
+          - not_null
+
+      - name: metric_name
+        description: The specific KPI within the group (e.g. ACTIVE_MRR, ARR, TOTAL_BILLABLE_HOURS).
+        tests:
+          - not_null
+
+      - name: metric_value
+        description: Numeric value of the metric.
+        tests:
+          - not_null
+
+      - name: unit
+        description: Unit of measure for metric_value.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['USD', 'HOURS', 'HOURS_PER_JOB', 'COUNT']
+
+      - name: calculated_at
+        description: Timestamp the mart was last built.
+        tests:
+          - not_null
