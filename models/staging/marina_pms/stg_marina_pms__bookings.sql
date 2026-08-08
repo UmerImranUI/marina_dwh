@@ -1,10 +1,12 @@
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key='booking_id',
+        incremental_strategy='merge',
+        partition_by={'field': '_loaded_at', 'data_type': 'timestamp', 'granularity': 'day'},
+        cluster_by=['marina_code']
     )
 }}
-
-
 SELECT
 
     CAST(booking_id AS STRING) AS booking_id,
@@ -39,6 +41,16 @@ SELECT
     ) AS slip_fee,
 
     UPPER(TRIM(marina_code)) AS marina_code,
+
     CURRENT_TIMESTAMP() AS _loaded_at
 
 FROM {{ source('marina_pms', 'raw_marina_pms') }}
+
+{% if is_incremental() %}
+
+WHERE booking_id NOT IN (
+    SELECT booking_id
+    FROM {{ this }}
+)
+
+{% endif %}
