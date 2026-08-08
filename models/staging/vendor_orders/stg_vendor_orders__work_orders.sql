@@ -76,15 +76,3 @@ select
     completed_at_utc,
     CURRENT_TIMESTAMP() AS _loaded_at
 from cleaned
-{{
-    config(
-        materialized='incremental',
-        incremental_strategy='insert_overwrite',
-        partition_by={
-            'field': 'created_at_utc',
-            'data_type': 'timestamp',
-            'granularity': 'day'
-        },
-        cluster_by=['vendor_name', 'status']
-    )
-}}

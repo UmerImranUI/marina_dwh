@@ -35,7 +35,7 @@ stripe_subs as (
         event_type,
         event_timestamp
 
-    from {{ source('raw','test_raw_stripe_subscriptions') }}
+    from {{ source('raw','raw_stripe_subscriptions') }}
 
 ),
 

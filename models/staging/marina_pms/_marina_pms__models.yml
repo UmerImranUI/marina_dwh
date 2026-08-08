@@ -29,5 +29,8 @@ models:
           - not_null
 
       - name: slip_fee
+        description: Standardized numeric slip fee.
+        tests:
+          - not_null
 
       - name: marina_code

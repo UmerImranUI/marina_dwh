@@ -21,11 +21,14 @@ models:
               values: ['REVENUE', 'VENDOR_UTILIZATION', 'VENDOR_RESPONSE_TIME']
 
       - name: dimension_type
-        description: What the metric is sliced by.
+        description: Dimension used to slice the KPI.
         tests:
           - not_null
           - accepted_values:
-              values: ['COMPANY', 'VENDOR']
+              values:
+                - COMPANY
+                - VENDOR
+                - OWNER
 
       - name: dimension_value
         description: The specific slice value (e.g. a vendor name, or 'ALL' for company-wide metrics).
@@ -33,9 +36,18 @@ models:
           - not_null
 
       - name: metric_name
-        description: The specific KPI within the group (e.g. ACTIVE_MRR, ARR, TOTAL_BILLABLE_HOURS).
+        description: Specific KPI represented by metric_value.
         tests:
           - not_null
+          - accepted_values:
+              values:
+                - ACTIVE_MRR
+                - ARR
+                - TOTAL_JOBS
+                - TOTAL_BILLABLE_HOURS
+                - UTILIZATION_HOURS_PER_JOB
+                - COMPLETED_JOB_COUNT
+                - AVG_RESPONSE_TIME_HOURS
 
       - name: metric_value
         description: Numeric value of the metric.
@@ -53,3 +65,5 @@ models:
         description: Timestamp the mart was last built.
         tests:
           - not_null
+
+          

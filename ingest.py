@@ -13,7 +13,7 @@ DATASET_ID = "marina_project"
 
 FILES = {
     # "seeds/raw_marina_pms.csv": "raw_marina_pms",
-    "seeds/raw_stripe_subscriptions.csv": "test_raw_stripe_subscriptions",
+    "seeds/raw_stripe_subscriptions.csv": "raw_stripe_subscriptions",
     # "seeds/raw_vendor_work_orders.csv": "raw_vendor_work_orders"
 }
 

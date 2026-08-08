@@ -3,20 +3,29 @@ version: 2
 models:
 
   - name: int_owners
-    description: Canonical owner records with deterministic surrogate Owner_ID.
+    description: >
+      Canonical owner records with deterministic surrogate Owner_ID.
+      Duplicate customer records are resolved using normalized customer
+      identity attributes rather than treating boat identity as owner identity.
 
     columns:
 
       - name: owner_id
+        description: Deterministic surrogate key for the owner.
         tests:
           - unique
           - not_null
 
+      - name: owner_name
+        description: Canonical owner name.
+        tests:
+          - not_null
+
       - name: owner_email
+        description: Resolved customer email.
 
       - name: owner_phone
-
-      - name: owner_name
+        description: Resolved customer phone number.
 
   - name: int_boats
     description: Canonical boat records with deterministic Boat_ID.
