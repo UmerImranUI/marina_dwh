@@ -112,7 +112,7 @@ revenue_metrics as (
     select
         'REVENUE',
         'OWNER',
-        coalesce(owner_name, 'UNMATCHED'),
+        coalesce(owner_id, 'UNMATCHED'),
         'ACTIVE_MRR',
         cast(round(sum(mrr_amount), 2) as float64),
         'USD'
@@ -124,7 +124,7 @@ revenue_metrics as (
     select
         'REVENUE',
         'OWNER',
-        coalesce(owner_name, 'UNMATCHED'),
+        coalesce(owner_id, 'UNMATCHED'),
         'ARR',
         cast(round(sum(mrr_amount) * 12, 2) as float64),
         'USD'
@@ -141,7 +141,7 @@ vendor_orders as (
     select
         work_order_id,
         vendor_name,
-        hours_spent
+        safe_cast(hours_spent as float64) as hours_spent
     from {{ ref('stg_vendor_orders__work_orders') }}
 
 ),
@@ -150,7 +150,7 @@ vendor_utilization_agg as (
 
     select
         vendor_name,
-        sum(hours_spent) as total_billable_hours,
+        sum(safe_cast(hours_spent as float64)) as total_billable_hours,
         count(distinct work_order_id) as total_jobs
     from vendor_orders
     group by vendor_name

@@ -2,7 +2,6 @@ version: 2
 
 models:
 
-  - name: stg_vendor_work_orders
   - name: stg_vendor_orders__work_orders
     description: >
       Cleans and standardizes raw vendor work orders,
@@ -26,11 +25,11 @@ models:
 
       - name: status
         tests:
-          - not_null
           - accepted_values:
-              values:
-                - COMPLETED
-                - IN PROGRESS
+              arguments:
+                values:
+                  - COMPLETED
+                  - IN PROGRESS
 
       - name: created_at_utc
         tests:

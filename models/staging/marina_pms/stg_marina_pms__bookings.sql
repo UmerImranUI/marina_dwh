@@ -1,9 +1,9 @@
 {{
     config(
-        materialized='table',
-        cluster_by=['marina_code']
+        materialized='table'
     )
 }}
+
 
 SELECT
 

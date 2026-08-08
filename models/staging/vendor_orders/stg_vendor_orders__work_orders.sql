@@ -1,13 +1,6 @@
 {{
     config(
-        materialized='incremental',
-        incremental_strategy='insert_overwrite',
-        partition_by={
-            'field': 'created_at_utc',
-            'data_type': 'timestamp',
-            'granularity': 'day'
-        },
-        cluster_by=['vendor_name', 'status']
+        materialized='table'
     )
 }}
 
@@ -21,7 +14,7 @@ with source as (
         status,
         created_at,
         completed_at
-    from {{ source('raw', 'raw_vendor_work_orders') }}
+    from {{ source('vendor_orders', 'raw_vendor_work_orders') }}
 
     {% if is_incremental() %}
 
@@ -46,16 +39,13 @@ cleaned as (
             'Unknown'
         ) as service_category,
 
-        s.hours_spent,
+        safe_cast( nullif(trim(cast(s.hours_spent as string)), '') as float64 ) as hours_spent,
 
         upper(s.status) as status,
 
         timestamp(s.created_at) as created_at_utc,
 
-        case
-            when s.completed_at is not null
-            then timestamp(s.completed_at)
-        end as completed_at_utc
+        safe_cast(nullif(trim(s.completed_at), '') as timestamp) as completed_at_utc
 
     from source s
 
