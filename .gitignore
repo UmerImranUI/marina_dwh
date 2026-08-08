@@ -41,10 +41,6 @@ ENV/
 !packages.yml
 !package-lock.yml
 
-# Explicitly ignore common GCP credential files
-service-account*.json
-*-service-account.json
-gcp-credentials.json
 
 # ============================================================
 # IDE / Editors
