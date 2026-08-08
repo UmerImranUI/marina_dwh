@@ -1,8 +1,10 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
+{{ config(
+    materialized='incremental',
+    unique_key='work_order_id',
+    incremental_strategy='merge',
+    partition_by={'field': 'created_at_utc', 'data_type': 'timestamp', 'granularity': 'day'},
+    cluster_by=['vendor_name']
+) }}
 
 with source as (
 
