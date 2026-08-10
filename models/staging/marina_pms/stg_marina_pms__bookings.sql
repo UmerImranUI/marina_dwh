@@ -33,7 +33,7 @@ SELECT
 
     TRIM(boat_name) AS boat_name,
 
-    {{ normalize_hull_id('hull_id') }} AS hull_id,
+    hull_id,
 
     CAST(
         {{ clean_currency('slip_fee') }}
