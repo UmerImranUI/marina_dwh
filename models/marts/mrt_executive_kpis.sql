@@ -15,8 +15,7 @@
 
 {{
     config(
-        materialized='table',
-        cluster_by=['metric_group', 'dimension_type']
+        materialized='table'
     )
 }}
 

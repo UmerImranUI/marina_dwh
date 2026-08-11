@@ -34,7 +34,7 @@ models:
   marina_dwh:
     # Config indicated by + and applies to all files under models/example/
     staging:
-      +materialized: incremental
+      +materialized: table
       +on_schema_change: append_new_columns
     intermediate:
       +materialized: table
