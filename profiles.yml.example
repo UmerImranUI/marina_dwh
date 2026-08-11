@@ -1,0 +1,14 @@
+marina_dwh:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: YOUR_GCP_PROJECT
+      dataset: YOUR_DATASET
+      keyfile: /path/to/your/service-account.json
+      location: US
+      threads: 4
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      priority: interactive
+  target: dev
