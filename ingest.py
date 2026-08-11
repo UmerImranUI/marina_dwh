@@ -12,9 +12,9 @@ PROJECT_ID = "general-analytics-504713"
 DATASET_ID = "marina_project"
 
 FILES = {
-    # "seeds/raw_marina_pms.csv": "raw_marina_pms",
+    "seeds/raw_marina_pms.csv": "raw_marina_pms",
     "seeds/raw_stripe_subscriptions.csv": "raw_stripe_subscriptions",
-    # "seeds/raw_vendor_work_orders.csv": "raw_vendor_work_orders"
+    "seeds/raw_vendor_work_orders.csv": "raw_vendor_work_orders"
 }
 
 # ==============================
