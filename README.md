@@ -370,3 +370,8 @@ This repository is a **portfolio / proof-of-concept implementation**.
 The project uses sanitized or synthetic data and does not contain confidential credentials, proprietary production data, or sensitive client information.
 
 The architecture is designed to demonstrate production-style data engineering patterns, scalability considerations, and analytical modeling practices.
+
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
