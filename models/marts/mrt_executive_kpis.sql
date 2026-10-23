@@ -107,6 +107,10 @@ revenue_metrics as (
         'USD'
     from active_subs_resolved
 
+    -- metric_group	dimension_type	dimension_value	metric_name	metric_value	unit
+    -- REVENUE	COMPANY	ALL	ACTIVE_MRR	5000	USD
+    -- REVENUE	COMPANY	ALL	ARR	60000	USD
+
     union all
 
     -- per-owner breakdown
@@ -119,6 +123,10 @@ revenue_metrics as (
         'USD'
     from active_subs_resolved
     group by owner_id
+
+    -- dimension_value	metric_name	metric_value
+    -- ID_A123	ACTIVE_MRR	300
+    -- ID_B456	ACTIVE_MRR	50
 
     union all
 
@@ -133,6 +141,7 @@ revenue_metrics as (
     group by owner_id
 
 ),
+
 ------------------------------------------------------------------------------
 -- 2. Captain / Vendor Utilization
 ------------------------------------------------------------------------------
@@ -157,6 +166,11 @@ vendor_utilization_agg as (
     group by vendor_name
 
 ),
+    -- work_order_id	vendor_name	hours_spent
+    -- WO-1	Vendor A	2
+    -- WO-2	Vendor A	3
+    -- WO-3	Vendor A	5
+    -- WO-4	Vendor B	4
 
 vendor_utilization_metrics as (
 
@@ -192,6 +206,11 @@ vendor_utilization_metrics as (
         'HOURS_PER_JOB'
     from vendor_utilization_agg
 
+    -- dimension_value	metric_name	metric_value	unit
+    -- Vendor A	TOTAL_BILLABLE_HOURS	10	HOURS
+    -- Vendor A	TOTAL_JOBS	3	COUNT
+    -- Vendor A	UTILIZATION_HOURS_PER_JOB	3.33	HOURS_PER_JOB
+
 ),
 
 ------------------------------------------------------------------------------
@@ -211,6 +230,10 @@ completed_orders as (
         and completed_at_utc is not null
 
 ),
+    -- work_order_id	created_at_utc	completed_at_utc	turnaround_hours
+    -- WO-1	08:00	10:00	2
+    -- WO-2	09:00	12:30	3.5
+    -- WO-3	10:00	11:30	1.5
 
 vendor_response_agg as (
 
@@ -223,6 +246,8 @@ vendor_response_agg as (
 
 ),
 
+    -- vendor_name	avg_response_hours	completed_job_count
+    -- Vendor A	2.33	3
 vendor_response_metrics as (
 
     select

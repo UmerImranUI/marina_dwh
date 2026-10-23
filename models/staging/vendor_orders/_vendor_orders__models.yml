@@ -26,7 +26,6 @@ models:
       - name: status
         tests:
           - accepted_values:
-              arguments:
                 values:
                   - COMPLETED
                   - IN PROGRESS

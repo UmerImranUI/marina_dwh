@@ -31,6 +31,13 @@ normalized AS (
     FROM owners
 ),
 
+-- customer_full_name	name_key
+-- John Doe	doe_j
+-- J. Doe	doe_j
+-- Sarah Lee	lee_s
+-- John Smith	smith_j
+
+
 -- Rules 1 & 2: phone/email are the primary, authoritative match signals
 -- match by email or phone
 primary_matched AS (
@@ -46,6 +53,10 @@ primary_matched AS (
 
     FROM normalized
 ),
+-- booking_id	customer_phone	phone_group
+-- BK-101	5551234567	BK-101
+-- BK-102	5551234567	BK-101
+-- BK-103	NULL	BK-103*
 
 -- A row could link to one owner via phone and another via email,
 -- so this is a connected-components problem, not a plain group-by
@@ -107,6 +118,11 @@ primary_clusters AS (
     LEFT JOIN components c
         USING (booking_id)
 ),
+
+-- booking_id	component_id	primary_cluster_id
+-- BK-101	BK-101	BK-101
+-- BK-102	BK-101	BK-101
+-- BK-104	NULL	BK-104
 
 -- Rule 3: only rows that found NO phone/email match
 -- fall back to hull_id + name
