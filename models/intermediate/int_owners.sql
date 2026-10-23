@@ -10,6 +10,7 @@ WITH owners AS (
     FROM {{ ref('stg_marina_pms__bookings') }}
 ),
 
+-- cleaning
 normalized AS (
     SELECT
         *,
@@ -31,6 +32,7 @@ normalized AS (
 ),
 
 -- Rules 1 & 2: phone/email are the primary, authoritative match signals
+-- match by email or phone
 primary_matched AS (
     SELECT
         *,
@@ -62,7 +64,13 @@ edges AS (
     FROM primary_matched
     WHERE email_norm IS NOT NULL
 ),
+-- booking_id	group_key	Relationship
+-- BK-101	BK-101	Phone
+-- BK-102	BK-101	Phone
+-- BK-101	BK-101	Email
+-- BK-102	BK-101	Email
 
+-- create relationships of how they're intented to be joined together
 components AS (
     SELECT
         booking_id,
@@ -72,6 +80,11 @@ components AS (
 
     FROM edges
 ),
+
+-- booking_id	Intended component_id
+-- BK-101	BK-101
+-- BK-102	BK-101
+-- BK-103	BK-101
 
 primary_clusters AS (
     SELECT
@@ -109,6 +122,12 @@ final_keyed AS (
     FROM primary_clusters
 ),
 
+-- booking_id	hull_id	name_key	matched_by_primary	owner_cluster_key
+-- BK-101	BOAT-1	doe_j	TRUE	BK-101
+-- BK-102	BOAT-1	doe_j	TRUE	BK-101
+-- BK-103	BOAT-1	doe_j	FALSE	BOAT-1\|doe_j
+-- BK-104	BOAT-2	lee_s	FALSE	BOAT-2\|lee_s
+
 resolved_contact AS (
     SELECT
         owner_cluster_key,
@@ -120,6 +139,11 @@ resolved_contact AS (
 
     GROUP BY owner_cluster_key
 ),
+
+-- deduplication:
+-- owner_cluster_key	customer_email	customer_phone
+-- BK-101	john@email.com	5551234567
+-- BK-101	john.alt@email.com	5551234567
 
 best_name AS (
     SELECT
@@ -135,6 +159,10 @@ best_name AS (
 
     FROM final_keyed
 )
+
+-- owner_cluster_key	customer_full_name	Length	rn
+-- BK-101	John Doe	8	1
+-- BK-101	J. Doe	6	2
 
 SELECT
     {{ dbt_utils.generate_surrogate_key(['rc.owner_cluster_key']) }} AS owner_id,

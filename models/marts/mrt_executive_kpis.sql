@@ -142,7 +142,7 @@ vendor_orders as (
     select
         work_order_id,
         vendor_name,
-        safe_cast(hours_spent as float64) as hours_spent
+        hours_spent
     from {{ ref('stg_vendor_orders__work_orders') }}
 
 ),
@@ -151,7 +151,7 @@ vendor_utilization_agg as (
 
     select
         vendor_name,
-        sum(safe_cast(hours_spent as float64)) as total_billable_hours,
+        sum(hours_spent) as total_billable_hours,
         count(distinct work_order_id) as total_jobs
     from vendor_orders
     group by vendor_name
